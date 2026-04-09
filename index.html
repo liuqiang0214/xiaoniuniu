@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我亲爱的宝贝 | 照片集</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 自定义 Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ff6b8b',
+                        secondary: '#a29bfe',
+                        accent: '#ff9ff3',
+                        light: '#f8f9fa',
+                        dark: '#2d3436'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.5s ease-in-out',
+                        'slide-down': 'slideDown 0.5s ease-in-out',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        slideDown: {
+                            '0%': { transform: 'translateY(-20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .text-shadow-lg {
+                text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            }
+            .transition-transform {
+                transition-property: transform;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                transition-duration: 300ms;
+            }
+            .hover-scale:hover {
+                transform: scale(1.05);
+            }
+            .hover-scale-gallery:hover {
+                transform: scale(1.1);
+            }
+            .glass-effect {
+                background: rgba(255, 255, 255, 0.25);
+                backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
+                border: 1px solid rgba(255, 255, 255, 0.18);
+            }
+            .carousel-indicator {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: rgba(255, 255, 255, 0.5);
+                transition: all 0.3s ease;
+            }
+            .carousel-indicator.active {
+                width: 30px;
+                border-radius: 5px;
+                background-color: white;
+            }
+            .countdown-card {
+                backdrop-filter: blur(10px);
+                background: rgba(255, 255, 255, 0.3);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-50 to-purple-50 min-h-screen">
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white bg-opacity-90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fa fa-heart text-primary text-2xl mr-2 animate-pulse"></i>
+                <h1 class="text-xl font-bold bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text">我亲爱的宝贝</h1>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#home" class="text-gray-700 hover:text-primary transition-colors duration-300">首页</a>
+                <a href="#countdown" class="text-gray-700 hover:text-primary transition-colors duration-300">纪念日</a>
+                <a href="#carousel" class="text-gray-700 hover:text-primary transition-colors duration-300">照片轮播</a>
+                <a href="#gallery" class="text-gray-700 hover:text-primary transition-colors duration-300">照片墙</a>
+                <a href="#memories" class="text-gray-700 hover:text-primary transition-colors duration-300">美好回忆</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <i class="fa fa-bars text-xl"></i>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md animate-fade-in">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#home" class="text-gray-700 hover:text-primary transition-colors duration-300 py-2">首页</a>
+                <a href="#countdown" class="text-gray-700 hover:text-primary transition-colors duration-300 py-2">纪念日</a>
+                <a href="#carousel" class="text-gray-700 hover:text-primary transition-colors duration-300 py-2">照片轮播</a>
+                <a href="#gallery" class="text-gray-700 hover:text-primary transition-colors duration-300 py-2">照片墙</a>
+                <a href="#memories" class="text-gray-700 hover:text-primary transition-colors duration-300 py-2">美好回忆</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首页/欢迎区域 -->
+    <section id="home" class="pt-24 pb-16 md:pt-32 md:pb-24">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2 mb-8 md:mb-0 animate-slide-up">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text">致我最亲爱的宝贝</h2>
+                    <p class="text-gray-700 text-lg mb-6 leading-relaxed">
+                        每一天看到你的笑容，都是我最幸福的时刻。这个照片集记录了我们在一起的美好时光，希望它能带给你同样的温暖和快乐。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#countdown" class="bg-primary hover:bg-pink-600 text-white font-medium py-2 px-6 rounded-full transition-colors duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                            查看纪念日 <i class="fa fa-clock-o ml-2"></i>
+                        </a>
+                        <button id="play-music" class="bg-secondary hover:bg-purple-600 text-white font-medium py-2 px-6 rounded-full transition-colors duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                            <i class="fa fa-music mr-2"></i> 播放音乐
+                        </button>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center animate-fade-in">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-xl">
+                        <img src="./images/5.jpg"" 
+                             alt="亲爱的宝贝" 
+                             class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                            <div class="p-4 text-white">
+                                <p class="text-lg font-medium">我的宝贝</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 🔥 纪念日倒计时模块（新增） -->
+    <!-- ============================================== -->
+    <section id="countdown" class="py-16 bg-gradient-to-r from-primary/10 to-secondary/20">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-10 animate-slide-down">
+                <h2 class="text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text">我们的纪念日</h2>
+                <p class="text-gray-600 max-w-xl mx-auto">从遇见你的那天起，每一分每一秒都值得被纪念</p>
+            </div>
+
+            <!-- 倒计时卡片 -->
+            <div class="max-w-3xl mx-auto rounded-2xl shadow-xl p-8 md:p-10 countdown-card border border-white/30 animate-fade-in">
+                <h3 class="text-xl md:text-2xl font-semibold text-gray-800 mb-6">
+                    <i class="fa fa-heart text-primary animate-pulse-slow mr-2"></i>
+                    我们已经在一起
+                </h3>
+
+                <!-- 倒计时数字 -->
+                <div id="love-timer" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="p-4 bg-white/60 rounded-xl shadow">
+                        <div class="text-3xl md:text-4xl font-bold text-primary" id="days">0</div>
+                        <div class="text-sm text-gray-500">天</div>
+                    </div>
+                    <div class="p-4 bg-white/60 rounded-xl shadow">
+                        <div class="text-3xl md:text-4xl font-bold text-primary" id="hours">0</div>
+                        <div class="text-sm text-gray-500">时</div>
+                    </div>
+                    <div class="p-4 bg-white/60 rounded-xl shadow">
+                        <div class="text-3xl md:text-4xl font-bold text-primary" id="minutes">0</div>
+                        <div class="text-sm text-gray-500">分</div>
+                    </div>
+                    <div class="p-4 bg-white/60 rounded-xl shadow">
+                        <div class="text-3xl md:text-4xl font-bold text-primary" id="seconds">0</div>
+                        <div class="text-sm text-gray-500">秒</div>
+                    </div>
+                </div>
+
+                <p class="text-gray-600 text-sm md:text-base" id="anniversary-date">始于 2026-01-01</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 照片轮播区域 -->
+    <section id="carousel" class="py-16 bg-gradient-to-r from-primary/10 to-secondary/10">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-slide-down">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">最美的你</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">每一张照片都记录着你的美丽，每一个笑容都温暖着我的心。</p>
+            </div>
+            
+            <div class="relative max-w-4xl mx-auto overflow-hidden rounded-xl shadow-2xl">
+                <div id="carousel-container" class="relative h-80 md:h-96"></div>
+                <button id="prev-slide" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 z-10">
+                    <i class="fa fa-chevron-left"></i>
+                </button>
+                <button id="next-slide" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 z-10">
+                    <i class="fa fa-chevron-right"></i>
+                </button>
+                <div id="carousel-indicators" class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-10"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 照片墙区域 -->
+    <section id="gallery" class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-slide-down">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">美好瞬间</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">这些照片记录了我们在一起的点点滴滴，每一个瞬间都值得珍藏。</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+    </section>
+
+    <!-- 美好回忆区域 -->
+    <section id="memories" class="py-16 bg-gradient-to-r from-primary/10 to-secondary/10">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-slide-down">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">我们的故事</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">每一个回忆都是我们爱情故事中的一页，让我们一起书写更多美好的篇章。</p>
+            </div>
+            <div class="max-w-4xl mx-auto"><div class="relative"></div></div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center">
+                        <i class="fa fa-heart text-primary text-2xl mr-2"></i>
+                        <h3 class="text-xl font-bold">我亲爱的宝贝</h3>
+                    </div>
+                    <p class="text-gray-400 mt-2">永远爱你，我的宝贝</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors duration-300"><i class="fa fa-weixin text-xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors duration-300"><i class="fa fa-weibo text-xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors duration-300"><i class="fa fa-instagram text-xl"></i></a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 pt-6 text-center text-gray-400">
+                <p>&copy; 2026 我亲爱的宝贝. 用❤️制作</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 照片查看器模态框 -->
+    <div id="photo-viewer" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="relative max-w-4xl max-h-[90vh] w-full">
+                <button id="close-viewer" class="absolute -top-12 right-0 text-white hover:text-primary transition-colors duration-300">
+                    <i class="fa fa-times text-2xl"></i>
+                </button>
+                <div class="bg-white rounded-lg overflow-hidden shadow-2xl">
+                    <div class="relative">
+                        <img id="viewer-image" src="" alt="查看照片" class="w-full h-auto max-h-[70vh] object-contain">
+                    </div>
+                    <div class="p-6">
+                        <h3 id="viewer-title" class="text-2xl font-bold mb-2 text-gray-800"></h3>
+                        <p id="viewer-description" class="text-gray-600"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 音乐播放器 -->
+    <audio id="background-music" loop>
+        <source src="https://music.163.com/song/media/outer/url?id=418602085.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // ==============================================
+        // ⏰ 倒计时设置（在这里改你们的纪念日日期）
+        // ==============================================
+        const LOVE_START_DATE = new Date("2026-02-28 0:00:00"); // 改成你们真正在一起的时间
+        const anniversaryDateEl = document.getElementById("anniversary-date");
+        anniversaryDateEl.innerText = `始于 ${LOVE_START_DATE.getFullYear()}-${(LOVE_START_DATE.getMonth()+1).toString().padStart(2,'0')}-${LOVE_START_DATE.getDate().toString().padStart(2,'0')}`;
+
+        function updateLoveTimer() {
+            const now = new Date();
+            const diff = now - LOVE_START_DATE;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+            document.getElementById("seconds").innerText = seconds;
+        }
+        updateLoveTimer();
+        setInterval(updateLoveTimer, 1000);
+
+        // ==================== 替换后的照片数据 ====================
+        const photos = [
+            {id:1, url:"./images/1.jpg", title:"甜美的微笑", description:"你的笑容是我每天最期待看到的阳光，温暖而充满希望。", category:"single", date:"2026-01-15"},
+            {id:2, url:"./images/2.jpg", title:"温柔的你", description:"你的温柔是我心灵的港湾，让我在疲惫时有个可以依靠的地方。", category:"single", date:"2026-01-20"},
+            {id:3, url:"./images/3.jpg", title:"可爱的你", description:"喜欢你俏皮可爱的样子，让我的生活充满了乐趣。", category:"single", date:"2026-01-25"},
+            {id:4, url:"./images/4.jpg", title:"元气的你", description:"喜欢你活泼开朗的性格，总能带给我无尽的快乐。", category:"single", date:"2026-02-01"},
+            {id:5, url:"./images/5.jpg", title:"萌萌的你", description:"和你在一起的每一刻都是珍贵的回忆，我会永远珍藏。", category:"single", date:"2026-02-14"},
+            {id:6, url:"./images/6.jpg", title:"灵动的你", description:"每一个瞬间的你都那么美好，我期待着未来的每一张照片。", category:"single", date:"2026-02-20"},
+            {id:7, url:"./images/7.jpg", title:"夜色中的你", description:"夜晚的你依旧耀眼，像星星一样照亮我的心。", category:"single", date:"2026-03-01"},
+            {id:8, url:"./images/8.jpg", title:"软萌的你", description:"你的可爱模样总是让我着迷，无法移开视线。", category:"single", date:"2026-03-10"},
+            {id:9, url:"/images/9.jpg", title:"甜甜的你", description:"阳光洒在你身上，你比阳光更耀眼，我的心也被你照亮。", category:"single", date:"2026-03-15"}
+        ];
+
+        const memories = [
+            {id:1, title:"第一次相遇", description:"那一天，我遇见了你，我的心就再也无法平静。你的笑容、你的声音，都深深印在我的脑海里。", date:"2024-12-01", image:"https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/e8a8162c95c5497591a782cb621fecab.jpg~tplv-a9rns2rl98-24:720:720.jpg"},
+            {id:2, title:"第一次约会", description:"我们的第一次约会，我紧张得手心出汗，但看到你温暖的笑容，所有的紧张都烟消云散了。", date:"2024-12-15", image:"https://p11-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/a5865e139a664bfba25d813dd281ba3b.jpg~tplv-a9rns2rl98-24:720:720.jpg"},
+            {id:3, title:"第一次牵手", description:"当我们的手指第一次相扣，我感受到了心跳加速的感觉。那一刻，我知道你就是我想要珍惜的人。", date:"2026-01-01", image:"https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/cfd8c39ab5ed40979d98af79fa556000.jpg~tplv-a9rns2rl98-24:720:720.jpg"},
+            {id:4, title:"第一个情人节", description:"和你一起度过的第一个情人节，虽然简单，但却充满了爱。有你在身边，每一天都是情人节。", date:"2026-02-14", image:"https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/8798d4398ba1439084c1ceb9182d1bd0.jpg~tplv-a9rns2rl98-24:720:720.jpg"}
+        ];
+
+        // ==================== 原有JS逻辑 ====================
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const playMusicButton = document.getElementById('play-music');
+        const backgroundMusic = document.getElementById('background-music');
+        const carouselContainer = document.getElementById('carousel-container');
+        const carouselIndicators = document.getElementById('carousel-indicators');
+        const prevSlideButton = document.getElementById('prev-slide');
+        const nextSlideButton = document.getElementById('next-slide');
+        const galleryContainer = document.querySelector('#gallery .grid');
+        const memoriesContainer = document.querySelector('#memories .relative');
+        const photoViewer = document.getElementById('photo-viewer');
+        const closeViewerButton = document.getElementById('close-viewer');
+        const viewerImage = document.getElementById('viewer-image');
+        const viewerTitle = document.getElementById('viewer-title');
+        const viewerDescription = document.getElementById('viewer-description');
+
+        mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
+                if (!mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden');
+            });
+        });
+
+        playMusicButton.addEventListener('click', () => {
+            if (backgroundMusic.paused) {
+                backgroundMusic.play().catch(() => alert('请先点击页面任意位置再播放音乐'));
+                playMusicButton.innerHTML = '<i class="fa fa-pause mr-2"></i> 暂停音乐';
+            } else {
+                backgroundMusic.pause();
+                playMusicButton.innerHTML = '<i class="fa fa-music mr-2"></i> 播放音乐';
+            }
+        });
+
+        document.addEventListener('click', () => {
+            if (backgroundMusic.paused) backgroundMusic.load();
+        }, { once: true });
+
+        let currentSlide = 0;
+        const slideInterval = 5000;
+        let slideTimer;
+
+        function initCarousel() {
+            carouselContainer.innerHTML = '';
+            carouselIndicators.innerHTML = '';
+            photos.forEach((photo, index) => {
+                const slide = document.createElement('div');
+                slide.className = `absolute inset-0 transition-opacity duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`;
+                slide.innerHTML = `
+                    <div class="relative h-full">
+                        <img src="${photo.url}" alt="${photo.title}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 flex flex-col justify-end p-6 md:p-10">
+                            <h3 class="text-white text-2xl md:text-3xl font-bold mb-2 text-shadow-lg">${photo.title}</h3>
+                            <p class="text-white/90 text-shadow">${photo.description}</p>
+                        </div>
+                    </div>`;
+                carouselContainer.appendChild(slide);
+                const indicator = document.createElement('button');
+                indicator.className = `carousel-indicator ${index === 0 ? 'active' : ''}`;
+                indicator.addEventListener('click', () => goToSlide(index));
+                carouselIndicators.appendChild(indicator);
+            });
+            startSlideShow();
+        }
+
+        function startSlideShow() { slideTimer = setInterval(nextSlide, slideInterval); }
+        function stopSlideShow() { clearInterval(slideTimer); }
+        function nextSlide() { goToSlide((currentSlide + 1) % photos.length); }
+        function prevSlide() { goToSlide((currentSlide - 1 + photos.length) % photos.length); }
+        function goToSlide(index) {
+            stopSlideShow();
+            currentSlide = index;
+            document.querySelectorAll('#carousel-container > div').forEach((s, i) => {
+                s.className = `absolute inset-0 transition-opacity duration-1000 ${i === currentSlide ? 'opacity-100' : 'opacity-0'}`;
+            });
+            document.querySelectorAll('.carousel-indicator').forEach((d, i) => {
+                d.className = `carousel-indicator ${i === currentSlide ? 'active' : ''}`;
+            });
+            startSlideShow();
+        }
+
+        prevSlideButton.addEventListener('click', prevSlide);
+        nextSlideButton.addEventListener('click', nextSlide);
+        carouselContainer.addEventListener('mouseenter', stopSlideShow);
+        carouselContainer.addEventListener('mouseleave', startSlideShow);
+
+        function initGallery() {
+            galleryContainer.innerHTML = '';
+            photos.forEach(photo => {
+                const item = document.createElement('div');
+                item.className = 'relative overflow-hidden rounded-xl shadow-lg group animate-fade-in';
+                item.innerHTML = `
+                    <div class="relative aspect-[4/3]">
+                        <img src="${photo.url}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
+                            <h3 class="text-white text-xl font-bold">${photo.title}</h3>
+                            <p class="text-white/80 text-sm">${photo.description}</p>
+                        </div>
+                    </div>`;
+                item.addEventListener('click', () => {
+                    viewerImage.src = photo.url;
+                    viewerTitle.textContent = photo.title;
+                    viewerDescription.textContent = photo.description;
+                    photoViewer.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                });
+                galleryContainer.appendChild(item);
+            });
+        }
+
+        function initMemories() {
+            memoriesContainer.innerHTML = '<div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary to-secondary"></div>';
+            memories.forEach((m, i) => {
+                const left = i % 2 === 0;
+                const div = document.createElement('div');
+                div.className = 'relative mb-12 animate-slide-up';
+                div.innerHTML = `
+                    <div class="flex items-center justify-${left ? 'end' : 'start'}">
+                        <div class="w-1/2 ${left ? 'pr-12 text-right' : 'pl-12'}">
+                            <div class="bg-white p-6 rounded-lg shadow-lg">
+                                <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">${m.date}</span>
+                                <h3 class="text-xl font-bold mt-2">${m.title}</h3>
+                                <p class="text-gray-600 mt-1">${m.description}</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-white border-4 border-primary z-10"></div>
+                        <div class="w-1/2 ${left ? 'pl-12' : 'pr-12'} hidden md:block">
+                            <div class="rounded-lg shadow-lg overflow-hidden">
+                                <img src="${m.image}" class="w-full hover:scale-105 transition-transform">
+                            </div>
+                        </div>
+                    </div>`;
+                memoriesContainer.appendChild(div);
+            });
+        }
+
+        closeViewerButton.addEventListener('click', () => {
+            photoViewer.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+
+        photoViewer.addEventListener('click', e => {
+            if (e.target === photoViewer) {
+                photoViewer.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && !photoViewer.classList.contains('hidden')) {
+                photoViewer.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initCarousel();
+            initGallery();
+            initMemories();
+
+            const animateOnScroll = () => {
+                document.querySelectorAll('.animate-slide-up,.animate-slide-down,.animate-fade-in').forEach(el => {
+                    if (el.getBoundingClientRect().top < window.innerHeight - 150) {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+
+            document.querySelectorAll('.animate-slide-up').forEach(e => { e.style.opacity=0; e.style.transform='translateY(20px)'; e.style.transition='.6s'; });
+            document.querySelectorAll('.animate-slide-down').forEach(e => { e.style.opacity=0; e.style.transform='translateY(-20px)'; e.style.transition='.6s'; });
+            document.querySelectorAll('.animate-fade-in').forEach(e => { e.style.opacity=0; e.style.transition='.6s'; });
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll();
+        });
+    </script>
+</body>
+</html>
